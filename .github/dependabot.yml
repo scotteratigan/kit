@@ -5,6 +5,10 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    # Only propose versions that have been published for at least 7 days,
+    # reducing exposure to freshly compromised or quickly yanked releases.
+    cooldown:
+      default-days: 7
     commit-message:
       # chore(deps) is deliberate: it does not trigger a release. Change to
       # "fix(deps)" if you want dependency bumps to publish a patch release.
@@ -14,5 +18,7 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7
     commit-message:
       prefix: "chore(deps)"
