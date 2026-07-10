@@ -10,9 +10,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	dockerimage "github.com/docker/docker/api/types/image"
-	"github.com/docker/docker/client"
 	"github.com/kitproj/kit/internal/types"
+	"github.com/moby/moby/api/types/network"
+	"github.com/moby/moby/client"
 	"sigs.k8s.io/yaml"
 )
 
@@ -84,7 +84,7 @@ func createExamplesReadme(err error, examples []Example) error {
 
 func updateExample(ctx context.Context, example *Example) error {
 	log.Printf("updating %s", example.Name)
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	cli, err := client.New(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
 		return fmt.Errorf("failed to create client: %w", err)
 	}
@@ -98,7 +98,7 @@ func updateExample(ctx context.Context, example *Example) error {
 		return fmt.Errorf("failed to pull %s: %w", image, err)
 	}
 
-	inspection, _, err := cli.ImageInspectWithRaw(ctx, image)
+	inspection, err := cli.ImageInspect(ctx, image)
 	if err != nil {
 		return fmt.Errorf("failed to inspect %s: %w", image, err)
 	}
@@ -126,8 +126,12 @@ func updateExample(ctx context.Context, example *Example) error {
 		}
 	}
 
-	for port := range inspection.Config.ExposedPorts {
-		port := port.Int()
+	for exposedPort := range inspection.Config.ExposedPorts {
+		parsed, err := network.ParsePort(exposedPort)
+		if err != nil {
+			return fmt.Errorf("failed to parse exposed port %q: %w", exposedPort, err)
+		}
+		port := int(parsed.Num())
 		hostPort := port
 		if port < 1024 {
 			hostPort = 8000 + port
@@ -153,7 +157,7 @@ func updateExample(ctx context.Context, example *Example) error {
 }
 
 func pullImage(ctx context.Context, cli *client.Client, image string) error {
-	if resp, err := cli.ImagePull(ctx, image, dockerimage.PullOptions{}); err != nil {
+	if resp, err := cli.ImagePull(ctx, image, client.ImagePullOptions{}); err != nil {
 		return fmt.Errorf("failed to pull %s: %w", image, err)
 	} else {
 		defer resp.Close()

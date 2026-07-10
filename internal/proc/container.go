@@ -13,23 +13,21 @@ import (
 	"path/filepath"
 	"time"
 
+	cerrdefs "github.com/containerd/errdefs"
 	"github.com/distribution/reference"
 	"github.com/docker/cli/cli/config"
-	dockertypes "github.com/docker/docker/api/types"
-	dockercontainer "github.com/docker/docker/api/types/container"
-	dockerimage "github.com/docker/docker/api/types/image"
-	"github.com/docker/docker/api/types/network"
-	"github.com/docker/docker/api/types/strslice"
-	"github.com/docker/docker/client"
-	"github.com/docker/docker/errdefs"
-	"github.com/docker/docker/pkg/archive"
-	"github.com/docker/docker/pkg/stdcopy"
-	"github.com/docker/docker/registry"
-	"github.com/docker/go-connections/nat"
 	"github.com/kitproj/kit/internal/types"
+	archive "github.com/moby/go-archive"
+	"github.com/moby/moby/api/pkg/stdcopy"
+	dockercontainer "github.com/moby/moby/api/types/container"
+	"github.com/moby/moby/api/types/network"
+	"github.com/moby/moby/client"
 	v1 "github.com/opencontainers/image-spec/specs-go/v1"
 	"k8s.io/utils/strings/slices"
 )
+
+// legacyIndexServer is the auth config key Docker uses for images hosted on Docker Hub.
+const legacyIndexServer = "https://index.docker.io/v1/"
 
 type container struct {
 	name string
@@ -46,7 +44,7 @@ func (c *container) Run(ctx context.Context, stdout, stderr io.Writer) error {
 	data, _ := json.Marshal(c.Task)
 	expectedHash := fmt.Sprintf("%x", adler32.Checksum(data))
 
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	cli, err := client.New(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
 		return fmt.Errorf("failed to create docker client: %w", err)
 	}
@@ -64,7 +62,7 @@ func (c *container) Run(ctx context.Context, stdout, stderr io.Writer) error {
 	// If the container exists and the hash is different, remove it.
 	if id != "" && existingHash != expectedHash {
 		log.Println("removing container")
-		if err := cli.ContainerRemove(ctx, id, dockercontainer.RemoveOptions{Force: true}); err != nil {
+		if _, err := cli.ContainerRemove(ctx, id, client.ContainerRemoveOptions{Force: true}); err != nil {
 			return fmt.Errorf("failed to remove container: %w", err)
 		}
 		id = ""
@@ -85,7 +83,7 @@ func (c *container) Run(ctx context.Context, stdout, stderr io.Writer) error {
 		}
 		defer r.Close()
 		log.Printf("building image from %q", dockerfile)
-		resp, err := cli.ImageBuild(ctx, r, dockertypes.ImageBuildOptions{Dockerfile: filepath.Base(dockerfile), Tags: []string{c.name}})
+		resp, err := cli.ImageBuild(ctx, r, client.ImageBuildOptions{Dockerfile: filepath.Base(dockerfile), Tags: []string{c.name}})
 		if err != nil {
 			return fmt.Errorf("failed to build image: %w", err)
 		}
@@ -101,21 +99,11 @@ func (c *container) Run(ctx context.Context, stdout, stderr io.Writer) error {
 		if err != nil {
 			return fmt.Errorf("unable to parse image: %w", err)
 		}
-		repoInfo, err := registry.ParseRepositoryInfo(ref)
-		if err != nil {
-			return fmt.Errorf("unable to parse repository info: %w", err)
-		}
-
-		var server string
-		if repoInfo.Index.Official {
-			info, err := cli.Info(ctx)
-			if err != nil || info.IndexServerAddress == "" {
-				server = registry.IndexServer
-			} else {
-				server = info.IndexServerAddress
-			}
-		} else {
-			server = repoInfo.Index.Name
+		// Docker Hub credentials are stored under the legacy index server key,
+		// other registries under their hostname.
+		server := reference.Domain(ref)
+		if server == "docker.io" {
+			server = legacyIndexServer
 		}
 		errBuf := &bytes.Buffer{}
 		cf := config.LoadDefaultConfigFile(errBuf)
@@ -132,7 +120,7 @@ func (c *container) Run(ctx context.Context, stdout, stderr io.Writer) error {
 		}
 		encodedAuth := base64.URLEncoding.EncodeToString(buf)
 
-		r, err := cli.ImagePull(ctx, c.Image, dockerimage.PullOptions{
+		r, err := cli.ImagePull(ctx, c.Image, client.ImagePullOptions{
 			RegistryAuth: encodedAuth,
 		})
 		if err != nil {
@@ -160,21 +148,26 @@ func (c *container) Run(ctx context.Context, stdout, stderr io.Writer) error {
 	}
 
 	log.Printf("creating container")
-	_, err = cli.ContainerCreate(ctx, &dockercontainer.Config{
-		Hostname:     c.name,
-		ExposedPorts: portSet,
-		Tty:          c.TTY,
-		Env:          environ,
-		Cmd:          strslice.StrSlice(c.Args),
-		Image:        image,
-		User:         c.User,
-		WorkingDir:   c.WorkingDir,
-		Entrypoint:   strslice.StrSlice(c.GetCommand()),
-		Labels:       map[string]string{hashLabel: expectedHash},
-	}, &dockercontainer.HostConfig{
-		PortBindings: portBindings,
-		Binds:        binds,
-	}, &network.NetworkingConfig{}, &v1.Platform{}, c.name)
+	_, err = cli.ContainerCreate(ctx, client.ContainerCreateOptions{
+		Config: &dockercontainer.Config{
+			Hostname:     c.name,
+			ExposedPorts: portSet,
+			Tty:          c.TTY,
+			Env:          environ,
+			Cmd:          c.Args,
+			Image:        image,
+			User:         c.User,
+			WorkingDir:   c.WorkingDir,
+			Entrypoint:   c.GetCommand(),
+			Labels:       map[string]string{hashLabel: expectedHash},
+		},
+		HostConfig: &dockercontainer.HostConfig{
+			PortBindings: portBindings,
+			Binds:        binds,
+		},
+		Platform: &v1.Platform{},
+		Name:     c.name,
+	})
 	if ignoreConflict(err) != nil {
 		return fmt.Errorf("failed to create container: %w", err)
 	}
@@ -184,7 +177,7 @@ func (c *container) Run(ctx context.Context, stdout, stderr io.Writer) error {
 	}
 
 	c.containerID = id
-	if err = cli.ContainerStart(ctx, id, dockercontainer.StartOptions{}); err != nil {
+	if _, err = cli.ContainerStart(ctx, id, client.ContainerStartOptions{}); err != nil {
 		return fmt.Errorf("failed to start container: %w", err)
 	}
 	go func() {
@@ -193,7 +186,7 @@ func (c *container) Run(ctx context.Context, stdout, stderr io.Writer) error {
 			log.Printf("failed to stop: %v", err)
 		}
 	}()
-	logs, err := cli.ContainerLogs(ctx, c.name, dockercontainer.LogsOptions{
+	logs, err := cli.ContainerLogs(ctx, c.name, client.ContainerLogsOptions{
 		ShowStdout: true,
 		ShowStderr: true,
 		Follow:     true,
@@ -208,29 +201,29 @@ func (c *container) Run(ctx context.Context, stdout, stderr io.Writer) error {
 		log.Printf("failed to log container: %v", err)
 	}
 
-	waitC, errC := cli.ContainerWait(context.Background(), id, dockercontainer.WaitConditionNotRunning)
+	waitRes := cli.ContainerWait(context.Background(), id, client.ContainerWaitOptions{Condition: dockercontainer.WaitConditionNotRunning})
 	select {
-	case wait := <-waitC:
+	case wait := <-waitRes.Result:
 		if wait.StatusCode != 0 {
 			return fmt.Errorf("exit code %d", wait.StatusCode)
 		}
 		return nil
-	case err := <-errC:
+	case err := <-waitRes.Error:
 		return fmt.Errorf("failed to wait for container: %w", err)
 	}
 }
 
-func (c *container) createPorts() (nat.PortSet, map[nat.Port][]nat.PortBinding, error) {
-	portSet := nat.PortSet{}
-	portBindings := map[nat.Port][]nat.PortBinding{}
+func (c *container) createPorts() (network.PortSet, network.PortMap, error) {
+	portSet := network.PortSet{}
+	portBindings := network.PortMap{}
 	for _, p := range c.Ports {
-		port, err := nat.NewPort("tcp", fmt.Sprint(p.ContainerPort))
+		port, err := network.ParsePort(fmt.Sprintf("%d/tcp", p.ContainerPort))
 		if err != nil {
 			return nil, nil, err
 		}
 		portSet[port] = struct{}{}
 		hostPort := p.GetHostPort()
-		portBindings[port] = []nat.PortBinding{{
+		portBindings[port] = []network.PortBinding{{
 			HostPort: fmt.Sprint(hostPort),
 		}}
 	}
@@ -258,7 +251,7 @@ func (c *container) stop(ctx context.Context) error {
 		return nil
 	}
 	log := c.log
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	cli, err := client.New(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
 		return fmt.Errorf("failed to create docker client: %w", err)
 	}
@@ -273,7 +266,7 @@ func (c *container) stop(ctx context.Context) error {
 	log.Printf("stopping container\n")
 	grace := c.spec.GetTerminationGracePeriod()
 	timeout := int(grace.Seconds())
-	err = cli.ContainerStop(ctx, id, dockercontainer.StopOptions{
+	_, err = cli.ContainerStop(ctx, id, client.ContainerStopOptions{
 		Timeout: &timeout,
 	})
 	if ignoreNotExist(err) != nil {
@@ -285,11 +278,11 @@ func (c *container) stop(ctx context.Context) error {
 const hashLabel = "kit.hash"
 
 func (c *container) getContainer(ctx context.Context, cli *client.Client) (string, string, error) {
-	list, err := cli.ContainerList(ctx, dockercontainer.ListOptions{All: true})
+	list, err := cli.ContainerList(ctx, client.ContainerListOptions{All: true})
 	if err != nil {
 		return "", "", err
 	}
-	for _, existing := range list {
+	for _, existing := range list.Items {
 		if slices.Contains(existing.Names, "/"+c.name) {
 			id := existing.ID
 			return id, existing.Labels[hashLabel], nil
@@ -299,14 +292,14 @@ func (c *container) getContainer(ctx context.Context, cli *client.Client) (strin
 }
 
 func ignoreConflict(err error) error {
-	if errdefs.IsConflict(err) {
+	if cerrdefs.IsConflict(err) {
 		return nil
 	}
 	return err
 }
 
 func ignoreNotExist(err error) error {
-	if errdefs.IsNotFound(err) {
+	if cerrdefs.IsNotFound(err) {
 		return nil
 	}
 	return err
@@ -314,21 +307,17 @@ func ignoreNotExist(err error) error {
 }
 
 func (c *container) execInContainer(ctx context.Context, command []string) ([]byte, error) {
-	// Create exec configuration
-	execConfig := dockertypes.ExecConfig{
+	execResp, err := c.cli.ExecCreate(ctx, c.containerID, client.ExecCreateOptions{
 		Cmd:          command,
 		AttachStdout: true,
 		AttachStderr: true,
-	}
-
-	// Create exec instance
-	execResp, err := c.cli.ContainerExecCreate(ctx, c.containerID, execConfig)
+	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to create exec instance: %w", err)
 	}
 
 	// Start exec and get response
-	resp, err := c.cli.ContainerExecAttach(ctx, execResp.ID, dockertypes.ExecStartCheck{})
+	resp, err := c.cli.ExecAttach(ctx, execResp.ID, client.ExecAttachOptions{})
 	if err != nil {
 		return nil, fmt.Errorf("failed to attach to exec: %w", err)
 	}
@@ -342,7 +331,7 @@ func (c *container) execInContainer(ctx context.Context, command []string) ([]by
 	}
 
 	// Check exec exit code
-	inspectResp, err := c.cli.ContainerExecInspect(ctx, execResp.ID)
+	inspectResp, err := c.cli.ExecInspect(ctx, execResp.ID, client.ExecInspectOptions{})
 	if err != nil {
 		return nil, fmt.Errorf("failed to inspect exec: %w", err)
 	}
