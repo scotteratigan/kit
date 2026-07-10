@@ -116,7 +116,7 @@ tasks:
 }
 
 func TestRunStartupPrintsDefaultConfig(t *testing.T) {
-	tempDir := t.TempDir()
+	tempDir := testTempDir(t)
 	writeTestConfig(t, filepath.Join(tempDir, "tasks.yaml"), `tasks:
   job:
     command: ["true"]
@@ -134,7 +134,7 @@ func TestRunStartupPrintsDefaultConfig(t *testing.T) {
 }
 
 func TestRunStartupPrintsExplicitConfig(t *testing.T) {
-	tempDir := t.TempDir()
+	tempDir := testTempDir(t)
 	configPath := filepath.Join(tempDir, "custom.yaml")
 	writeTestConfig(t, configPath, `tasks:
   job:
@@ -163,7 +163,7 @@ func TestRunFlagErrorIsActionable(t *testing.T) {
 }
 
 func TestRunConfigParseErrorIsActionable(t *testing.T) {
-	tempDir := t.TempDir()
+	tempDir := testTempDir(t)
 	configPath := filepath.Join(tempDir, "tasks.yaml")
 	writeTestConfig(t, configPath, "tasks:\n  job: [\n")
 
@@ -179,7 +179,7 @@ func TestRunConfigParseErrorIsActionable(t *testing.T) {
 }
 
 func TestRunWorkflowFailureIsActionable(t *testing.T) {
-	tempDir := t.TempDir()
+	tempDir := testTempDir(t)
 	writeTestConfig(t, filepath.Join(tempDir, "tasks.yaml"), `tasks:
   job:
     command: ["false"]
@@ -201,4 +201,14 @@ func writeTestConfig(t *testing.T, path, contents string) {
 	t.Helper()
 	err := os.WriteFile(path, []byte(contents), 0644)
 	assert.NoError(t, err)
+}
+
+// testTempDir returns t.TempDir() with symlinks resolved. On macOS the temp
+// dir lives under /var, a symlink to /private/var, while kit prints paths
+// based on the resolved working directory.
+func testTempDir(t *testing.T) string {
+	t.Helper()
+	dir, err := filepath.EvalSymlinks(t.TempDir())
+	assert.NoError(t, err)
+	return dir
 }
