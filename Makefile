@@ -12,7 +12,3 @@ default:
 	go run ./hack update-schema
 	command -v jsonschema2md || npm install -g @adobe/jsonschema2md
 	jsonschema2md -d schema -f yaml -o docs/reference
-
-.PHONY: release
-release:
-	./release
