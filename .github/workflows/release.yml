@@ -2,50 +2,65 @@ name: release
 
 on:
   push:
-    # run only against tags
-    tags:
-      - "*"
+    branches: ["main"]
 
 permissions:
   contents: write
-  # packages: write
-  # issues: write
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
-      - run: git fetch --force --tags
+
       - name: Set up Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
-          go-version: ">=1.22.0"
+          go-version-file: go.mod
           cache: true
 
       - run: go generate -v ./...
       - run: go vet -v ./...
       - run: go test -v ./...
 
-      # https://gist.github.com/asukakenji/f15ba7e588ac42795f421b48b8aede63
-      - run: CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o kit_${{ github.ref_name }}_darwin_amd64 .
-      - run: CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -o kit_${{ github.ref_name }}_darwin_arm64 .
-      - run: CGO_ENABLED=0 GOOS=linux GOARCH=386 go build -o kit_${{ github.ref_name }}_linux_386 .
-      - run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o kit_${{ github.ref_name }}_linux_amd64 .
-      - run: CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o kit_${{ github.ref_name }}_linux_arm64 .
-
-      # create checksums.txt
-      - run: shasum -a 256 kit_* > checksums.txt
-
-      - name: Create a Release in a GitHub Action
-        uses: softprops/action-gh-release@v2
+      # Determine the next semantic version from conventional commits since the
+      # last tag (fix -> patch, feat -> minor, BREAKING CHANGE/! -> major).
+      # With default_bump=false, commits like docs/chore produce no tag and the
+      # release steps below are skipped.
+      - name: Bump version and tag
+        id: tag
+        uses: mathieudutour/github-tag-action@a22cf08638b34d5badda920f9daf6e72c477b07b # v6.2
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: false
+          tag_prefix: v
+
+      # https://gist.github.com/asukakenji/f15ba7e588ac42795f421b48b8aede63
+      - name: Build binaries
+        if: steps.tag.outputs.new_tag
+        env:
+          CGO_ENABLED: "0"
+          TAG: ${{ steps.tag.outputs.new_tag }}
+        run: |
+          GOOS=darwin GOARCH=amd64 go build -o kit_${TAG}_darwin_amd64 .
+          GOOS=darwin GOARCH=arm64 go build -o kit_${TAG}_darwin_arm64 .
+          GOOS=linux GOARCH=386 go build -o kit_${TAG}_linux_386 .
+          GOOS=linux GOARCH=amd64 go build -o kit_${TAG}_linux_amd64 .
+          GOOS=linux GOARCH=arm64 go build -o kit_${TAG}_linux_arm64 .
+          shasum -a 256 kit_* > checksums.txt
+
+      - name: Create GitHub Release
+        if: steps.tag.outputs.new_tag
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+        with:
+          tag_name: ${{ steps.tag.outputs.new_tag }}
+          body: ${{ steps.tag.outputs.changelog }}
           files: |
-            kit_${{ github.ref_name }}_darwin_amd64
-            kit_${{ github.ref_name }}_darwin_arm64
-            kit_${{ github.ref_name }}_linux_386
-            kit_${{ github.ref_name }}_linux_amd64
-            kit_${{ github.ref_name }}_linux_arm64            
+            kit_${{ steps.tag.outputs.new_tag }}_darwin_amd64
+            kit_${{ steps.tag.outputs.new_tag }}_darwin_arm64
+            kit_${{ steps.tag.outputs.new_tag }}_linux_386
+            kit_${{ steps.tag.outputs.new_tag }}_linux_amd64
+            kit_${{ steps.tag.outputs.new_tag }}_linux_arm64
             checksums.txt
