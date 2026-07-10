@@ -2,6 +2,7 @@ package internal
 
 import (
 	"bufio"
+	"bytes"
 	"context"
 	_ "embed"
 	"encoding/json"
@@ -116,16 +117,39 @@ func StartServer(ctx context.Context, port int, wg *sync.WaitGroup, dag DAG[*Tas
 
 		w.Header().Set("Content-Type", "text/event-stream")
 
+		// Batch lines into a single SSE event (the browser joins the "data:"
+		// lines with "\n") so replaying a large log file doesn't produce one
+		// event, and one flush, per line.
+		const maxBatchLines = 1000
+		var batch bytes.Buffer
+		flushBatch := func() error {
+			if batch.Len() == 0 {
+				return nil
+			}
+			batch.WriteString("\n")
+			if _, err := w.Write(batch.Bytes()); err != nil {
+				return err
+			}
+			w.(http.Flusher).Flush()
+			batch.Reset()
+			return nil
+		}
+
 		for {
 			scanner := bufio.NewScanner(file)
+			lines := 0
 			for scanner.Scan() {
-				line := scanner.Text()
-				_, err := fmt.Fprintf(w, "data: %s\n\n", line)
-				if err != nil {
-					http.Error(w, err.Error(), http.StatusInternalServerError)
-					return
+				fmt.Fprintf(&batch, "data: %s\n", scanner.Text())
+				lines++
+				if lines >= maxBatchLines {
+					if err := flushBatch(); err != nil {
+						return
+					}
+					lines = 0
 				}
-				w.(http.Flusher).Flush()
+			}
+			if err := flushBatch(); err != nil {
+				return
 			}
 
 			if err := scanner.Err(); err != nil {
