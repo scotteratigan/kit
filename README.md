@@ -3,6 +3,16 @@
 [![CodeQL](https://github.com/scotteratigan/kit/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/scotteratigan/kit/actions/workflows/codeql-analysis.yml)
 [![Go](https://github.com/scotteratigan/kit/actions/workflows/go.yml/badge.svg)](https://github.com/scotteratigan/kit/actions/workflows/go.yml)
 
+## About This Fork
+
+This is a permanent fork of [kitproj/kit](https://github.com/kitproj/kit), maintained independently with enhancements driven by its own roadmap. Credit for the original project goes to the [kitproj](https://github.com/kitproj) authors.
+
+Differences from the original project so far:
+
+- **Web UI log rendering with xterm.js** - Logs are rendered in a virtualized terminal emulator instead of one DOM element per line. This keeps the UI responsive on very large logs, preserves whitespace and formatting, and adds native ANSI color and escape-code support.
+- **Automated releases** - Releases are cut automatically from conventional commits on `main` (or triggered manually), instead of requiring manual tagging.
+- **CI maintenance** - GitHub Actions updated for Node 24 and migrated off the deprecated `docker/docker` module.
+
 ## What is Kit?
 
 Kit is a powerful workflow engine that simplifies complex software development environments by combining multiple tools into a single binary:
