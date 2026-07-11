@@ -1,7 +1,7 @@
 # Untitled integer in undefined Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/semaphores/patternProperties/.*
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/semaphores/patternProperties/.*
 ```
 
 

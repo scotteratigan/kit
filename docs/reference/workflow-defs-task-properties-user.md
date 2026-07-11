@@ -1,7 +1,7 @@
 # user Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/user
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/user
 ```
 
 The user to run the task as.

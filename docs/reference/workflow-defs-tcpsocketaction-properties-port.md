@@ -1,7 +1,7 @@
 # port Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/TCPSocketAction/properties/port
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/TCPSocketAction/properties/port
 ```
 
 Port number of the port to probe.

@@ -7,13 +7,13 @@ import (
 	"os"
 
 	"github.com/invopop/jsonschema"
-	"github.com/kitproj/kit/internal/types"
+	"github.com/scotteratigan/kit/internal/types"
 )
 
 func updateSchema() error {
 	log.Println("updating schema")
 	r := new(jsonschema.Reflector)
-	_ = r.AddGoComments("github.com/kitproj/kit", "./")
+	_ = r.AddGoComments("github.com/scotteratigan/kit", "./")
 	s := r.Reflect(types.Workflow{})
 	for i, definition := range s.Definitions {
 		definition.Title = i

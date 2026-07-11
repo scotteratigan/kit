@@ -1,7 +1,7 @@
 # Untitled string in undefined Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/EnvVars/patternProperties/.*
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/EnvVars/patternProperties/.*
 ```
 
 

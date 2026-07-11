@@ -11,7 +11,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/kitproj/kit/internal/types"
+	"github.com/scotteratigan/kit/internal/types"
 )
 
 type host struct {

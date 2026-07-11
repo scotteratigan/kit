@@ -1,7 +1,7 @@
 # type Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/type
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/type
 ```
 
 Type is the type of the task: "service" or "job". If omitted, if there are ports, it's a service, otherwise it's a job.

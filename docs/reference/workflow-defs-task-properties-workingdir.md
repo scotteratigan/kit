@@ -1,7 +1,7 @@
 # workingDir Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/workingDir
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/workingDir
 ```
 
 The working directory in the container or on the host

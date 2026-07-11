@@ -1,7 +1,7 @@
 # semaphore Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/semaphore
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/semaphore
 ```
 
 A semaphore to limit the number of tasks with the same semaphore that can run at the same time

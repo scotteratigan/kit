@@ -1,7 +1,7 @@
 # sh Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/sh
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/sh
 ```
 
 The shell script to run, instead of the command

@@ -1,7 +1,7 @@
 # periodSeconds Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Probe/properties/periodSeconds
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Probe/properties/periodSeconds
 ```
 
 How often (in seconds) to perform the probe.

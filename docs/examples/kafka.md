@@ -1,18 +1,11 @@
-# Kafka  with Kraft
+# Apache Kafka
 
-[Help](https://github.com/kitproj/kafka-docker)
+[Help](https://docs.confluent.io/platform/current/installation/docker/config-reference.html#confluent-local)
 
-Standalone Kafka image that uses Kraft.
+Apache Kafka is a distributed streaming platform that's designed to handle high throughput, fault-tolerant streaming data.
 
 ```yaml
 tasks:
   "":
-    image: ghcr.io/kitproj/kafka
-volumes:
-- hostPath:
-    path: volumes/kafka/kraft-combined-logs
-  name: kafka.kraft-combined-logs
+    image: confluentinc/confluent-local
 ```
-
-Licence(s): MIT
-

@@ -1,7 +1,7 @@
 # TCPSocketAction Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/TCPSocketAction
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/TCPSocketAction
 ```
 
 TCPSocketAction describes an action based on opening a socket
@@ -16,9 +16,9 @@ TCPSocketAction describes an action based on opening a socket
 
 # TCPSocketAction Properties
 
-| Property      | Type      | Required | Nullable       | Defined by                                                                                                                                                          |
-| :------------ | :-------- | :------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [port](#port) | `integer` | Required | cannot be null | [Untitled schema](workflow-defs-tcpsocketaction-properties-port.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/TCPSocketAction/properties/port") |
+| Property      | Type      | Required | Nullable       | Defined by                                                                                                                                                                |
+| :------------ | :-------- | :------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [port](#port) | `integer` | Required | cannot be null | [Untitled schema](workflow-defs-tcpsocketaction-properties-port.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/TCPSocketAction/properties/port") |
 
 ## port
 
@@ -32,7 +32,7 @@ Port number of the port to probe.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-tcpsocketaction-properties-port.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/TCPSocketAction/properties/port")
+* defined in: [Untitled schema](workflow-defs-tcpsocketaction-properties-port.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/TCPSocketAction/properties/port")
 
 ### port Type
 

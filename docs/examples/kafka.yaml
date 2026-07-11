@@ -1,7 +1,3 @@
 tasks:
   "":
-    image: ghcr.io/kitproj/kafka
-volumes:
-- hostPath:
-    path: volumes/kafka/kraft-combined-logs
-  name: kafka.kraft-combined-logs
+    image: confluentinc/confluent-local

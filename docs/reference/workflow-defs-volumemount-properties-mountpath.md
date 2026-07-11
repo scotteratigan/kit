@@ -1,7 +1,7 @@
 # mountPath Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/VolumeMount/properties/mountPath
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/VolumeMount/properties/mountPath
 ```
 
 Path within the container at which the volume should be mounted.

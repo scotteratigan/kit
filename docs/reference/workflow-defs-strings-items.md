@@ -1,7 +1,7 @@
 # Untitled string in undefined Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Strings/items
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Strings/items
 ```
 
 

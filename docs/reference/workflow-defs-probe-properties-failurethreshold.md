@@ -1,7 +1,7 @@
 # failureThreshold Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Probe/properties/failureThreshold
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Probe/properties/failureThreshold
 ```
 
 Minimum consecutive failures for the probe to be considered failed after having succeeded.

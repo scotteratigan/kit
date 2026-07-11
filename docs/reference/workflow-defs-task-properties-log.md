@@ -1,7 +1,7 @@
 # log Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/log
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/log
 ```
 
 Where to log the output of the task. E.g. if the task is verbose. Defaults to /dev/stdout. Maybe a file, or /dev/null.

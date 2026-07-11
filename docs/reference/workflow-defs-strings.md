@@ -1,7 +1,7 @@
 # Strings Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/targets
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/targets
 ```
 
 A list of files this task will create. If these exist, and they're newer than the watched files, the task is skipped.

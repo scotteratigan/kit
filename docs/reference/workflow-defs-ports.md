@@ -1,7 +1,7 @@
 # Ports Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/ports
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/ports
 ```
 
 A list of ports to expose.

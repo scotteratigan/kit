@@ -1,7 +1,7 @@
 # group Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/group
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/group
 ```
 
 The group this task belongs to. Tasks in the same group will be visually grouped together in the UI.

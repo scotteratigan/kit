@@ -13,10 +13,10 @@ import (
 	"time"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/kitproj/kit/internal/proc"
-	"github.com/kitproj/kit/internal/types"
-	"github.com/kitproj/kit/internal/util"
 	"github.com/pkg/browser"
+	"github.com/scotteratigan/kit/internal/proc"
+	"github.com/scotteratigan/kit/internal/types"
+	"github.com/scotteratigan/kit/internal/util"
 	"k8s.io/utils/strings/slices"
 )
 

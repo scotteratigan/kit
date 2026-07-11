@@ -1,4 +1,4 @@
-module github.com/kitproj/kit
+module github.com/scotteratigan/kit
 
 go 1.25.0
 

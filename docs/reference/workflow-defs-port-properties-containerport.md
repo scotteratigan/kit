@@ -1,7 +1,7 @@
 # containerPort Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Port/properties/containerPort
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Port/properties/containerPort
 ```
 
 The container port to expose

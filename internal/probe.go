@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/kitproj/kit/internal/types"
+	"github.com/scotteratigan/kit/internal/types"
 )
 
 func probeLoop(ctx context.Context, probe types.Probe, callback func(ok bool, err error)) {

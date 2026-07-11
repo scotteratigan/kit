@@ -1,7 +1,7 @@
 # Untitled schema Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Tasks/patternProperties
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Tasks/patternProperties
 ```
 
 
