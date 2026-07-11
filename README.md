@@ -1,7 +1,7 @@
 # Kit - Unified Workflow Engine for Software Development
 
-[![CodeQL](https://github.com/kitproj/kit/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/kitproj/kit/actions/workflows/codeql-analysis.yml)
-[![Go](https://github.com/kitproj/kit/actions/workflows/go.yml/badge.svg)](https://github.com/kitproj/kit/actions/workflows/go.yml)
+[![CodeQL](https://github.com/scotteratigan/kit/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/scotteratigan/kit/actions/workflows/codeql-analysis.yml)
+[![Go](https://github.com/scotteratigan/kit/actions/workflows/go.yml/badge.svg)](https://github.com/scotteratigan/kit/actions/workflows/go.yml)
 
 ## What is Kit?
 
