@@ -1,7 +1,7 @@
 # name Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Volume/properties/name
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Volume/properties/name
 ```
 
 Volume's name.

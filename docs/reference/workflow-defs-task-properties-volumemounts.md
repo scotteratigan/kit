@@ -1,7 +1,7 @@
 # volumeMounts Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/volumeMounts
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/volumeMounts
 ```
 
 Volumes to mount in the container

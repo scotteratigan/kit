@@ -16,7 +16,7 @@ import (
 	cerrdefs "github.com/containerd/errdefs"
 	"github.com/distribution/reference"
 	"github.com/docker/cli/cli/config"
-	"github.com/kitproj/kit/internal/types"
+	"github.com/scotteratigan/kit/internal/types"
 	archive "github.com/moby/go-archive"
 	"github.com/moby/moby/api/pkg/stdcopy"
 	dockercontainer "github.com/moby/moby/api/types/container"

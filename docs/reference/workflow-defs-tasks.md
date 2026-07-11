@@ -1,7 +1,7 @@
 # Tasks Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/tasks
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/tasks
 ```
 
 
@@ -16,9 +16,9 @@ https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/propertie
 
 # tasks Properties
 
-| Property | Type     | Required | Nullable       | Defined by                                                                                                                          |
-| :------- | :------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------- |
-| `.*`     | `object` | Optional | cannot be null | [Untitled schema](workflow-defs-task.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Tasks/patternProperties/.*") |
+| Property | Type     | Required | Nullable       | Defined by                                                                                                                                |
+| :------- | :------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------- |
+| `.*`     | `object` | Optional | cannot be null | [Untitled schema](workflow-defs-task.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Tasks/patternProperties/.*") |
 
 ## Pattern: `.*`
 
@@ -32,7 +32,7 @@ A task is a container or a command to run.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Tasks/patternProperties/.*")
+* defined in: [Untitled schema](workflow-defs-task.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Tasks/patternProperties/.*")
 
 ### .\* Type
 

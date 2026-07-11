@@ -1,7 +1,7 @@
 # semaphores Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/semaphores
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/semaphores
 ```
 
 
@@ -16,9 +16,9 @@ https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/propertie
 
 # semaphores Properties
 
-| Property | Type      | Required | Nullable       | Defined by                                                                                                                                                                                                |
-| :------- | :-------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `.*`     | `integer` | Optional | cannot be null | [Untitled schema](workflow-defs-workflow-properties-semaphores-patternproperties-.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/semaphores/patternProperties/.*") |
+| Property | Type      | Required | Nullable       | Defined by                                                                                                                                                                                                      |
+| :------- | :-------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.*`     | `integer` | Optional | cannot be null | [Untitled schema](workflow-defs-workflow-properties-semaphores-patternproperties-.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/semaphores/patternProperties/.*") |
 
 ## Pattern: `.*`
 
@@ -32,7 +32,7 @@ https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/propertie
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-workflow-properties-semaphores-patternproperties-.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/semaphores/patternProperties/.*")
+* defined in: [Untitled schema](workflow-defs-workflow-properties-semaphores-patternproperties-.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/semaphores/patternProperties/.*")
 
 ### .\* Type
 

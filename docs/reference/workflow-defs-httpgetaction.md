@@ -1,7 +1,7 @@
 # HTTPGetAction Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Probe/properties/httpGet
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Probe/properties/httpGet
 ```
 
 HTTPGetAction describes an action based on HTTP Locks requests.
@@ -16,11 +16,11 @@ HTTPGetAction describes an action based on HTTP Locks requests.
 
 # httpGet Properties
 
-| Property          | Type      | Required | Nullable       | Defined by                                                                                                                                                          |
-| :---------------- | :-------- | :------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [scheme](#scheme) | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-httpgetaction-properties-scheme.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/scheme") |
-| [port](#port)     | `integer` | Optional | cannot be null | [Untitled schema](workflow-defs-httpgetaction-properties-port.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/port")     |
-| [path](#path)     | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-httpgetaction-properties-path.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/path")     |
+| Property          | Type      | Required | Nullable       | Defined by                                                                                                                                                                |
+| :---------------- | :-------- | :------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [scheme](#scheme) | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-httpgetaction-properties-scheme.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/scheme") |
+| [port](#port)     | `integer` | Optional | cannot be null | [Untitled schema](workflow-defs-httpgetaction-properties-port.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/port")     |
+| [path](#path)     | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-httpgetaction-properties-path.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/path")     |
 
 ## scheme
 
@@ -34,7 +34,7 @@ Scheme to use for connecting to the host. Defaults to HTTP.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-httpgetaction-properties-scheme.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/scheme")
+* defined in: [Untitled schema](workflow-defs-httpgetaction-properties-scheme.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/scheme")
 
 ### scheme Type
 
@@ -52,7 +52,7 @@ Number of the port
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-httpgetaction-properties-port.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/port")
+* defined in: [Untitled schema](workflow-defs-httpgetaction-properties-port.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/port")
 
 ### port Type
 
@@ -70,7 +70,7 @@ Path to access on the HTTP server.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-httpgetaction-properties-path.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/path")
+* defined in: [Untitled schema](workflow-defs-httpgetaction-properties-path.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/path")
 
 ### path Type
 

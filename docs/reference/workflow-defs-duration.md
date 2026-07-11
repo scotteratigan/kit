@@ -1,7 +1,7 @@
 # Duration Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/stalledTimeout
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/stalledTimeout
 ```
 
 The timeout for the task to be considered stalled. If omitted, the task will be considered stalled after 30 seconds of no activity.
@@ -16,9 +16,9 @@ The timeout for the task to be considered stalled. If omitted, the task will be 
 
 # stalledTimeout Properties
 
-| Property              | Type     | Required | Nullable       | Defined by                                                                                                                                |
-| :-------------------- | :------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------- |
-| [Duration](#duration) | `object` | Required | cannot be null | [Untitled schema](workflow-defs-duration.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Duration/properties/Duration") |
+| Property              | Type     | Required | Nullable       | Defined by                                                                                                                                      |
+| :-------------------- | :------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Duration](#duration) | `object` | Required | cannot be null | [Untitled schema](workflow-defs-duration.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Duration/properties/Duration") |
 
 ## Duration
 
@@ -32,7 +32,7 @@ The timeout for the task to be considered stalled. If omitted, the task will be 
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-duration.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Duration/properties/Duration")
+* defined in: [Untitled schema](workflow-defs-duration.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Duration/properties/Duration")
 
 ### Duration Type
 

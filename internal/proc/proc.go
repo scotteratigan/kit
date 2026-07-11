@@ -5,7 +5,7 @@ import (
 	"io"
 	"log"
 
-	"github.com/kitproj/kit/internal/types"
+	"github.com/scotteratigan/kit/internal/types"
 )
 
 type Interface interface {

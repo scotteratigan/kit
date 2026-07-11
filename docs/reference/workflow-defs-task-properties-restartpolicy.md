@@ -1,7 +1,7 @@
 # restartPolicy Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/restartPolicy
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/restartPolicy
 ```
 
 The restart policy, e.g. Always, Never, OnFailure. Defaults depends on the type of task.

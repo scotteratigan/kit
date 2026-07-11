@@ -1,7 +1,7 @@
 # hostPort Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Port/properties/hostPort
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Port/properties/hostPort
 ```
 
 The host port to route to the container port

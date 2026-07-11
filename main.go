@@ -16,8 +16,8 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/kitproj/kit/internal"
-	"github.com/kitproj/kit/internal/types"
+	"github.com/scotteratigan/kit/internal"
+	"github.com/scotteratigan/kit/internal/types"
 	"sigs.k8s.io/yaml"
 )
 

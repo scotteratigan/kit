@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/kitproj/kit/internal/types/workflow",
+  "$id": "https://github.com/scotteratigan/kit/internal/types/workflow",
   "$ref": "#/$defs/Workflow",
   "$defs": {
     "Duration": {

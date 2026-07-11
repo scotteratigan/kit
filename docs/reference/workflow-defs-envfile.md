@@ -1,7 +1,7 @@
 # Envfile Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/envfile
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/envfile
 ```
 
 

@@ -72,7 +72,7 @@
   workflow:
     spec:
       tasks:
-        - image: ghcr.io/kitproj/kafka
+        - image: confluentinc/confluent-local
 - name: rabbitmq
   title: RabbitMQ
   description: The RabbitMQ container image provides a scalable and highly-available message broker that supports various messaging protocols and can be easily deployed and managed in a containerized environment.
@@ -97,17 +97,16 @@
           ports: 6650 8080
           command: [ "/pulsar/bin/pulsar", "standalone" ]
 
-# Simulation
+# HTTP testing
 
-- name: sim
-  title: Sim
-  description: Sim is a straight-forward API simulation tool that's tiny, fast, secure and scalable.
+- name: httpbin
+  title: httpbin
+  description: httpbin is a simple HTTP request and response service, useful for testing HTTP clients and APIs.
   workflow:
     spec:
       tasks:
-        - image: ghcr.io/kitproj/sim
-          ports: 8080
-          readinessProbe: http://:8080/hello
+        - image: kennethreitz/httpbin
+          ports: 80
 
 # Webserver
 

@@ -1,7 +1,7 @@
 # Workflow Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow
 ```
 
 
@@ -16,15 +16,15 @@ https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow
 
 # Workflow Properties
 
-| Property                                                        | Type      | Required | Nullable       | Defined by                                                                                                                                                                                              |
-| :-------------------------------------------------------------- | :-------- | :------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [port](#port)                                                   | `integer` | Optional | cannot be null | [Untitled schema](workflow-defs-workflow-properties-port.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/port")                                                   |
-| [terminationGracePeriodSeconds](#terminationgraceperiodseconds) | `integer` | Optional | cannot be null | [Untitled schema](workflow-defs-workflow-properties-terminationgraceperiodseconds.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/terminationGracePeriodSeconds") |
-| [tasks](#tasks)                                                 | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-tasks.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/tasks")                                                                     |
-| [volumes](#volumes)                                             | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-workflow-properties-volumes.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/volumes")                                             |
-| [semaphores](#semaphores)                                       | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-workflow-properties-semaphores.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/semaphores")                                       |
-| [env](#env)                                                     | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-envvars.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/env")                                                                     |
-| [envfile](#envfile)                                             | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-envfile.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/envfile")                                                                 |
+| Property                                                        | Type      | Required | Nullable       | Defined by                                                                                                                                                                                                    |
+| :-------------------------------------------------------------- | :-------- | :------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [port](#port)                                                   | `integer` | Optional | cannot be null | [Untitled schema](workflow-defs-workflow-properties-port.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/port")                                                   |
+| [terminationGracePeriodSeconds](#terminationgraceperiodseconds) | `integer` | Optional | cannot be null | [Untitled schema](workflow-defs-workflow-properties-terminationgraceperiodseconds.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/terminationGracePeriodSeconds") |
+| [tasks](#tasks)                                                 | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-tasks.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/tasks")                                                                     |
+| [volumes](#volumes)                                             | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-workflow-properties-volumes.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/volumes")                                             |
+| [semaphores](#semaphores)                                       | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-workflow-properties-semaphores.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/semaphores")                                       |
+| [env](#env)                                                     | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-envvars.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/env")                                                                     |
+| [envfile](#envfile)                                             | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-envfile.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/envfile")                                                                 |
 
 ## port
 
@@ -38,7 +38,7 @@ https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-workflow-properties-port.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/port")
+* defined in: [Untitled schema](workflow-defs-workflow-properties-port.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/port")
 
 ### port Type
 
@@ -56,7 +56,7 @@ https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-workflow-properties-terminationgraceperiodseconds.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/terminationGracePeriodSeconds")
+* defined in: [Untitled schema](workflow-defs-workflow-properties-terminationgraceperiodseconds.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/terminationGracePeriodSeconds")
 
 ### terminationGracePeriodSeconds Type
 
@@ -74,7 +74,7 @@ https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-tasks.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/tasks")
+* defined in: [Untitled schema](workflow-defs-tasks.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/tasks")
 
 ### tasks Type
 
@@ -92,7 +92,7 @@ https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-workflow-properties-volumes.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/volumes")
+* defined in: [Untitled schema](workflow-defs-workflow-properties-volumes.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/volumes")
 
 ### volumes Type
 
@@ -110,7 +110,7 @@ https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-workflow-properties-semaphores.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/semaphores")
+* defined in: [Untitled schema](workflow-defs-workflow-properties-semaphores.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/semaphores")
 
 ### semaphores Type
 
@@ -128,7 +128,7 @@ A list of environment variables.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-envvars.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/env")
+* defined in: [Untitled schema](workflow-defs-envvars.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/env")
 
 ### env Type
 
@@ -146,7 +146,7 @@ A list of environment variables.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-envfile.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/envfile")
+* defined in: [Untitled schema](workflow-defs-envfile.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/envfile")
 
 ### envfile Type
 

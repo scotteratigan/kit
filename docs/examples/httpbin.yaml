@@ -1,0 +1,5 @@
+tasks:
+  "":
+    image: kennethreitz/httpbin
+    ports:
+    - "80"

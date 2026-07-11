@@ -11,7 +11,7 @@
  * [RabbitMQ](rabbitmq.md) The RabbitMQ container image provides a scalable and highly-available message broker that supports various messaging protocols and can be easily deployed and managed in a containerized environment.
  * [NATS](nats.md) The nats container image provides a lightweight messaging system for distributed applications running in containerized environments.
  * [Apache Pulsar](pulsar.md) The apachepulsar/pulsar container image provides a scalable and distributed messaging system for enterprise-grade applications.
- * [Sim](sim.md) Sim is a straight-forward API simulation tool that's tiny, fast, secure and scalable.
+ * [httpbin](httpbin.md) httpbin is a simple HTTP request and response service, useful for testing HTTP clients and APIs.
  * [Nginx](nginx.md) The nginx container image is a lightweight and high-performance web server designed to efficiently serve static and dynamic content.
  * [Apache HTTP Server](httpd.md) The httpd container image provides an Apache HTTP server for serving web content.
  * [DynamoDB Local](dynamo.md) Dynamo is a distributed key-value storage system developed by Amazon Web Services (AWS) for highly available, scalable and reliable NoSQL data storage.

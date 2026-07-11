@@ -1,7 +1,7 @@
 # tty Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/tty
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/tty
 ```
 
 Use a pseudo-TTY

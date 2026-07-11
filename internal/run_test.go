@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kitproj/kit/internal/types"
+	"github.com/scotteratigan/kit/internal/types"
 	"github.com/stretchr/testify/assert"
 )
 

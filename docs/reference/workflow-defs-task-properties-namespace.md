@@ -1,7 +1,7 @@
 # namespace Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/namespace
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/namespace
 ```
 
 The namespace to run the Kubernetes resource in. Defaults to the namespace of the current Kubernetes context.

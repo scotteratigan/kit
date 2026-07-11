@@ -1,7 +1,7 @@
 # EnvVars Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/env
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/env
 ```
 
 A list of environment variables.
@@ -16,9 +16,9 @@ A list of environment variables.
 
 # env Properties
 
-| Property | Type     | Required | Nullable       | Defined by                                                                                                                                                  |
-| :------- | :------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `.*`     | `string` | Optional | cannot be null | [Untitled schema](workflow-defs-envvars-patternproperties-.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/EnvVars/patternProperties/.*") |
+| Property | Type     | Required | Nullable       | Defined by                                                                                                                                                        |
+| :------- | :------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.*`     | `string` | Optional | cannot be null | [Untitled schema](workflow-defs-envvars-patternproperties-.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/EnvVars/patternProperties/.*") |
 
 ## Pattern: `.*`
 
@@ -32,7 +32,7 @@ A list of environment variables.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-envvars-patternproperties-.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/EnvVars/patternProperties/.*")
+* defined in: [Untitled schema](workflow-defs-envvars-patternproperties-.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/EnvVars/patternProperties/.*")
 
 ### .\* Type
 

@@ -17,7 +17,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/kitproj/kit/internal/types"
+	"github.com/scotteratigan/kit/internal/types"
 	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -50,7 +50,7 @@ type k8s struct {
 }
 
 // previously we used the K8s common labels, but because charts use them themselves (e.g. Helm) we cannot and must create our own annotations
-const x = "kit.kitproj.github.com"
+const x = "kit.scotteratigan.github.com"
 const nameLabel = x + "/name"
 const versionLabel = x + "/version"
 

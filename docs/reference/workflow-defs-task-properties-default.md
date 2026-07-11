@@ -1,7 +1,7 @@
 # default Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/default
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/default
 ```
 
 Whether this is the default task to run if no task is specified.

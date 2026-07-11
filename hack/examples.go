@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/kitproj/kit/internal/types"
+	"github.com/scotteratigan/kit/internal/types"
 	"github.com/moby/moby/api/types/network"
 	"github.com/moby/moby/client"
 	"sigs.k8s.io/yaml"

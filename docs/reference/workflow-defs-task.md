@@ -1,7 +1,7 @@
 # Task Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Tasks/patternProperties/.*
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Tasks/patternProperties/.*
 ```
 
 A task is a container or a command to run.
@@ -16,35 +16,35 @@ A task is a container or a command to run.
 
 # .\* Properties
 
-| Property                            | Type      | Required | Nullable       | Defined by                                                                                                                                                          |
-| :---------------------------------- | :-------- | :------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [type](#type)                       | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-type.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/type")                       |
-| [log](#log)                         | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-log.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/log")                         |
-| [image](#image)                     | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-image.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/image")                     |
-| [imagePullPolicy](#imagepullpolicy) | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-imagepullpolicy.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/imagePullPolicy") |
-| [livenessProbe](#livenessprobe)     | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-probe.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/livenessProbe")                             |
-| [readinessProbe](#readinessprobe)   | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-probe.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/readinessProbe")                            |
-| [command](#command)                 | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-strings.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/command")                                 |
-| [args](#args)                       | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-strings.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/args")                                    |
-| [sh](#sh)                           | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-sh.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/sh")                           |
-| [manifests](#manifests)             | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-strings.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/manifests")                               |
-| [namespace](#namespace)             | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-namespace.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/namespace")             |
-| [workingDir](#workingdir)           | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-workingdir.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/workingDir")           |
-| [user](#user)                       | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-user.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/user")                       |
-| [env](#env)                         | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-envvars.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/env")                                     |
-| [envfile](#envfile)                 | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-envfile.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/envfile")                                 |
-| [ports](#ports)                     | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-ports.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/ports")                                     |
-| [volumeMounts](#volumemounts)       | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-volumemounts.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/volumeMounts")       |
-| [tty](#tty)                         | `boolean` | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-tty.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/tty")                         |
-| [watch](#watch)                     | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-strings.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/watch")                                   |
-| [mutex](#mutex)                     | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-mutex.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/mutex")                     |
-| [semaphore](#semaphore)             | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-semaphore.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/semaphore")             |
-| [dependencies](#dependencies)       | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-strings.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/dependencies")                            |
-| [targets](#targets)                 | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-strings.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/targets")                                 |
-| [restartPolicy](#restartpolicy)     | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-restartpolicy.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/restartPolicy")     |
-| [stalledTimeout](#stalledtimeout)   | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-duration.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/stalledTimeout")                         |
-| [group](#group)                     | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-group.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/group")                     |
-| [default](#default)                 | `boolean` | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-default.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/default")                 |
+| Property                            | Type      | Required | Nullable       | Defined by                                                                                                                                                                |
+| :---------------------------------- | :-------- | :------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [type](#type)                       | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-type.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/type")                       |
+| [log](#log)                         | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-log.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/log")                         |
+| [image](#image)                     | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-image.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/image")                     |
+| [imagePullPolicy](#imagepullpolicy) | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-imagepullpolicy.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/imagePullPolicy") |
+| [livenessProbe](#livenessprobe)     | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-probe.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/livenessProbe")                             |
+| [readinessProbe](#readinessprobe)   | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-probe.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/readinessProbe")                            |
+| [command](#command)                 | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-strings.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/command")                                 |
+| [args](#args)                       | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-strings.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/args")                                    |
+| [sh](#sh)                           | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-sh.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/sh")                           |
+| [manifests](#manifests)             | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-strings.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/manifests")                               |
+| [namespace](#namespace)             | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-namespace.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/namespace")             |
+| [workingDir](#workingdir)           | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-workingdir.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/workingDir")           |
+| [user](#user)                       | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-user.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/user")                       |
+| [env](#env)                         | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-envvars.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/env")                                     |
+| [envfile](#envfile)                 | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-envfile.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/envfile")                                 |
+| [ports](#ports)                     | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-ports.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/ports")                                     |
+| [volumeMounts](#volumemounts)       | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-volumemounts.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/volumeMounts")       |
+| [tty](#tty)                         | `boolean` | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-tty.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/tty")                         |
+| [watch](#watch)                     | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-strings.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/watch")                                   |
+| [mutex](#mutex)                     | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-mutex.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/mutex")                     |
+| [semaphore](#semaphore)             | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-semaphore.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/semaphore")             |
+| [dependencies](#dependencies)       | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-strings.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/dependencies")                            |
+| [targets](#targets)                 | `array`   | Optional | cannot be null | [Untitled schema](workflow-defs-strings.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/targets")                                 |
+| [restartPolicy](#restartpolicy)     | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-restartpolicy.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/restartPolicy")     |
+| [stalledTimeout](#stalledtimeout)   | `object`  | Optional | cannot be null | [Untitled schema](workflow-defs-duration.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/stalledTimeout")                         |
+| [group](#group)                     | `string`  | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-group.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/group")                     |
+| [default](#default)                 | `boolean` | Optional | cannot be null | [Untitled schema](workflow-defs-task-properties-default.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/default")                 |
 
 ## type
 
@@ -60,7 +60,7 @@ Services are running in the background.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-type.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/type")
+* defined in: [Untitled schema](workflow-defs-task-properties-type.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/type")
 
 ### type Type
 
@@ -78,7 +78,7 @@ Where to log the output of the task. E.g. if the task is verbose. Defaults to /d
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-log.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/log")
+* defined in: [Untitled schema](workflow-defs-task-properties-log.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/log")
 
 ### log Type
 
@@ -96,7 +96,7 @@ Either the container image to run, or a directory containing a Dockerfile. If om
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-image.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/image")
+* defined in: [Untitled schema](workflow-defs-task-properties-image.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/image")
 
 ### image Type
 
@@ -114,7 +114,7 @@ Pull policy, e.g. Always, Never, IfNotPresent
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-imagepullpolicy.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/imagePullPolicy")
+* defined in: [Untitled schema](workflow-defs-task-properties-imagepullpolicy.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/imagePullPolicy")
 
 ### imagePullPolicy Type
 
@@ -132,7 +132,7 @@ A probe to check if the task is alive, it will be restarted if not.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-probe.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/livenessProbe")
+* defined in: [Untitled schema](workflow-defs-probe.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/livenessProbe")
 
 ### livenessProbe Type
 
@@ -150,7 +150,7 @@ A probe to check if the task is alive, it will be restarted if not.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-probe.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/readinessProbe")
+* defined in: [Untitled schema](workflow-defs-probe.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/readinessProbe")
 
 ### readinessProbe Type
 
@@ -168,7 +168,7 @@ The command to run in the container or on the host. If both the image and the co
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-strings.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/command")
+* defined in: [Untitled schema](workflow-defs-strings.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/command")
 
 ### command Type
 
@@ -186,7 +186,7 @@ The arguments to pass to the command
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-strings.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/args")
+* defined in: [Untitled schema](workflow-defs-strings.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/args")
 
 ### args Type
 
@@ -204,7 +204,7 @@ The shell script to run, instead of the command
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-sh.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/sh")
+* defined in: [Untitled schema](workflow-defs-task-properties-sh.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/sh")
 
 ### sh Type
 
@@ -222,7 +222,7 @@ A directories or files of Kubernetes manifests to apply. Once running the task w
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-strings.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/manifests")
+* defined in: [Untitled schema](workflow-defs-strings.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/manifests")
 
 ### manifests Type
 
@@ -240,7 +240,7 @@ The namespace to run the Kubernetes resource in. Defaults to the namespace of th
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-namespace.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/namespace")
+* defined in: [Untitled schema](workflow-defs-task-properties-namespace.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/namespace")
 
 ### namespace Type
 
@@ -258,7 +258,7 @@ The working directory in the container or on the host
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-workingdir.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/workingDir")
+* defined in: [Untitled schema](workflow-defs-task-properties-workingdir.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/workingDir")
 
 ### workingDir Type
 
@@ -276,7 +276,7 @@ The user to run the task as.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-user.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/user")
+* defined in: [Untitled schema](workflow-defs-task-properties-user.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/user")
 
 ### user Type
 
@@ -294,7 +294,7 @@ A list of environment variables.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-envvars.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/env")
+* defined in: [Untitled schema](workflow-defs-envvars.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/env")
 
 ### env Type
 
@@ -312,7 +312,7 @@ Environment file (e.g. .env) to use
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-envfile.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/envfile")
+* defined in: [Untitled schema](workflow-defs-envfile.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/envfile")
 
 ### envfile Type
 
@@ -330,7 +330,7 @@ A list of ports to expose.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-ports.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/ports")
+* defined in: [Untitled schema](workflow-defs-ports.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/ports")
 
 ### ports Type
 
@@ -348,7 +348,7 @@ Volumes to mount in the container
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-volumemounts.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/volumeMounts")
+* defined in: [Untitled schema](workflow-defs-task-properties-volumemounts.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/volumeMounts")
 
 ### volumeMounts Type
 
@@ -366,7 +366,7 @@ Use a pseudo-TTY
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-tty.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/tty")
+* defined in: [Untitled schema](workflow-defs-task-properties-tty.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/tty")
 
 ### tty Type
 
@@ -384,7 +384,7 @@ A list of files to watch for changes, and restart the task if they change
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-strings.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/watch")
+* defined in: [Untitled schema](workflow-defs-strings.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/watch")
 
 ### watch Type
 
@@ -402,7 +402,7 @@ A mutex to prevent multiple tasks with the same mutex from running at the same t
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-mutex.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/mutex")
+* defined in: [Untitled schema](workflow-defs-task-properties-mutex.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/mutex")
 
 ### mutex Type
 
@@ -420,7 +420,7 @@ A semaphore to limit the number of tasks with the same semaphore that can run at
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-semaphore.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/semaphore")
+* defined in: [Untitled schema](workflow-defs-task-properties-semaphore.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/semaphore")
 
 ### semaphore Type
 
@@ -438,7 +438,7 @@ A list of tasks to run before this task
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-strings.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/dependencies")
+* defined in: [Untitled schema](workflow-defs-strings.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/dependencies")
 
 ### dependencies Type
 
@@ -456,7 +456,7 @@ A list of files this task will create. If these exist, and they're newer than th
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-strings.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/targets")
+* defined in: [Untitled schema](workflow-defs-strings.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/targets")
 
 ### targets Type
 
@@ -474,7 +474,7 @@ The restart policy, e.g. Always, Never, OnFailure. Defaults depends on the type 
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-restartpolicy.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/restartPolicy")
+* defined in: [Untitled schema](workflow-defs-task-properties-restartpolicy.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/restartPolicy")
 
 ### restartPolicy Type
 
@@ -492,7 +492,7 @@ The timeout for the task to be considered stalled. If omitted, the task will be 
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-duration.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/stalledTimeout")
+* defined in: [Untitled schema](workflow-defs-duration.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/stalledTimeout")
 
 ### stalledTimeout Type
 
@@ -510,7 +510,7 @@ The group this task belongs to. Tasks in the same group will be visually grouped
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-group.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/group")
+* defined in: [Untitled schema](workflow-defs-task-properties-group.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/group")
 
 ### group Type
 
@@ -528,7 +528,7 @@ Whether this is the default task to run if no task is specified.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-task-properties-default.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/default")
+* defined in: [Untitled schema](workflow-defs-task-properties-default.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/default")
 
 ### default Type
 

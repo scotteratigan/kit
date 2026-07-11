@@ -1,7 +1,7 @@
 # mutex Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Task/properties/mutex
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Task/properties/mutex
 ```
 
 A mutex to prevent multiple tasks with the same mutex from running at the same time

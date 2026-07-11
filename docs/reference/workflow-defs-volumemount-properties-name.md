@@ -1,7 +1,7 @@
 # name Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/VolumeMount/properties/name
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/VolumeMount/properties/name
 ```
 
 This must match the name of a volume.

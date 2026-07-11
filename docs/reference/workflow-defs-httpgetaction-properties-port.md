@@ -1,7 +1,7 @@
 # port Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/port
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/HTTPGetAction/properties/port
 ```
 
 Number of the port

@@ -1,7 +1,7 @@
 # Volume Schema
 
 ```txt
-https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/properties/volumes/items
+https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Workflow/properties/volumes/items
 ```
 
 
@@ -16,10 +16,10 @@ https://github.com/kitproj/kit/internal/types/workflow#/$defs/Workflow/propertie
 
 # items Properties
 
-| Property              | Type     | Required | Nullable       | Defined by                                                                                                                                        |
-| :-------------------- | :------- | :------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [name](#name)         | `string` | Required | cannot be null | [Untitled schema](workflow-defs-volume-properties-name.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Volume/properties/name") |
-| [hostPath](#hostpath) | `object` | Required | cannot be null | [Untitled schema](workflow-defs-hostpath.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Volume/properties/hostPath")           |
+| Property              | Type     | Required | Nullable       | Defined by                                                                                                                                              |
+| :-------------------- | :------- | :------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [name](#name)         | `string` | Required | cannot be null | [Untitled schema](workflow-defs-volume-properties-name.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Volume/properties/name") |
+| [hostPath](#hostpath) | `object` | Required | cannot be null | [Untitled schema](workflow-defs-hostpath.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Volume/properties/hostPath")           |
 
 ## name
 
@@ -33,7 +33,7 @@ Volume's name.
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-volume-properties-name.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Volume/properties/name")
+* defined in: [Untitled schema](workflow-defs-volume-properties-name.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Volume/properties/name")
 
 ### name Type
 
@@ -51,7 +51,7 @@ HostPath represents a pre-existing file or directory on the host machine that is
 
 * cannot be null
 
-* defined in: [Untitled schema](workflow-defs-hostpath.md "https://github.com/kitproj/kit/internal/types/workflow#/$defs/Volume/properties/hostPath")
+* defined in: [Untitled schema](workflow-defs-hostpath.md "https://github.com/scotteratigan/kit/internal/types/workflow#/$defs/Volume/properties/hostPath")
 
 ### hostPath Type
 
