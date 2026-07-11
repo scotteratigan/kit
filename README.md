@@ -85,6 +85,26 @@ tasks:
 kit run  # Run the 'run' task and its dependencies
 ```
 
+### CLI Flags
+
+| Flag | Description |
+|------|-------------|
+| `-f` | Config file (default `tasks.yaml`) |
+| `-C` | Working directory |
+| `-s` | Comma-separated tasks to skip |
+| `-with` | Comma-separated tasks to add as prerequisites of the requested task(s) |
+| `-p` | Web UI port (default 3000; `0` disables) |
+| `-b` | Open the Web UI in the browser |
+| `-w` | Rewrite/normalize the config file |
+
+Use `-with` to opt into extra prerequisite tasks for a single run without editing `tasks.yaml`:
+
+```bash
+kit -with db-reset,migrate run
+```
+
+This runs `db-reset` and `migrate` before `run` for this invocation only. The tasks must already exist in the workflow. If a task is listed in both `-with` and `-s`, skip wins.
+
 ## Core Concepts
 
 ### Jobs vs Services
