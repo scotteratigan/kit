@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/kitproj/kit/internal/types"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -19,6 +20,9 @@ func TestBashCompletion(t *testing.T) {
 
 	// Should use correct regex pattern for task names
 	assert.Contains(t, output, `grep -E '^  [a-zA-Z0-9_-]+:\s*$'`)
+
+	// Should offer the -with flag
+	assert.Contains(t, output, "-with")
 }
 
 func TestZshCompletion(t *testing.T) {
@@ -38,6 +42,9 @@ func TestZshCompletion(t *testing.T) {
 
 	// Should conditionally register compdef
 	assert.Contains(t, output, "compdef _kit kit")
+
+	// Should offer the -with flag
+	assert.Contains(t, output, "'-with[tasks to add as prerequisites]:tasks:'")
 }
 
 func TestFishCompletion(t *testing.T) {
@@ -51,6 +58,9 @@ func TestFishCompletion(t *testing.T) {
 
 	// Should have completions for flags
 	assert.Contains(t, output, "complete -c kit")
+
+	// Should offer the -with flag
+	assert.Contains(t, output, "complete -c kit -o with")
 }
 
 func TestPrintCompletionInvalidShell(t *testing.T) {
@@ -195,6 +205,97 @@ func TestRunWorkflowFailureIsActionable(t *testing.T) {
 	assert.Contains(t, stderr.String(), "kit: error: workflow run failed: failed tasks: [job]")
 	assert.Contains(t, stderr.String(), "kit: cause: one or more tasks exited with a non-zero status")
 	assert.Contains(t, stderr.String(), "kit: next: inspect the task output above or the logs/ directory and retry")
+}
+
+func TestInjectPrerequisitesDedupesAndSkipsSelf(t *testing.T) {
+	wf := &types.Workflow{Tasks: types.Tasks{
+		"prereq": types.Task{},
+		"other":  types.Task{},
+		"target": types.Task{Dependencies: []string{"prereq"}},
+	}}
+
+	err := injectPrerequisites(wf, []string{"target"}, "prereq,other,target")
+
+	assert.NoError(t, err)
+	assert.Equal(t, types.Strings{"prereq", "other"}, wf.Tasks["target"].Dependencies)
+}
+
+func TestInjectPrerequisitesEmptyIsNoop(t *testing.T) {
+	wf := &types.Workflow{Tasks: types.Tasks{"target": types.Task{}}}
+
+	err := injectPrerequisites(wf, []string{"target"}, "")
+
+	assert.NoError(t, err)
+	assert.Empty(t, wf.Tasks["target"].Dependencies)
+}
+
+func TestRunWithRunsPrerequisiteFirst(t *testing.T) {
+	tempDir := testTempDir(t)
+	writeTestConfig(t, filepath.Join(tempDir, "tasks.yaml"), `tasks:
+  prereq:
+    sh: touch marker.txt
+  target:
+    sh: test -f marker.txt
+`)
+
+	stdout := &bytes.Buffer{}
+	stderr := &bytes.Buffer{}
+	exitCode := run([]string{"-C", tempDir, "-p", "0", "-with", "prereq", "target"}, stdout, stderr)
+
+	assert.Equal(t, 0, exitCode)
+	assert.Empty(t, stderr.String())
+}
+
+func TestRunWithUnknownTaskIsActionable(t *testing.T) {
+	tempDir := testTempDir(t)
+	writeTestConfig(t, filepath.Join(tempDir, "tasks.yaml"), `tasks:
+  target:
+    command: ["true"]
+`)
+
+	stdout := &bytes.Buffer{}
+	stderr := &bytes.Buffer{}
+	exitCode := run([]string{"-C", tempDir, "-p", "0", "-with", "missing", "target"}, stdout, stderr)
+
+	assert.Equal(t, 1, exitCode)
+	assert.Contains(t, stderr.String(), `kit: error: task prerequisite selection failed: prerequisite task "missing" not found in workflow`)
+	assert.Contains(t, stderr.String(), "kit: cause: a task listed in `-with` is not defined in the loaded workflow")
+	assert.Contains(t, stderr.String(), "kit: next: check the task names in "+filepath.Join(tempDir, "tasks.yaml")+" and retry")
+}
+
+func TestRunWithSkipWins(t *testing.T) {
+	tempDir := testTempDir(t)
+	writeTestConfig(t, filepath.Join(tempDir, "tasks.yaml"), `tasks:
+  prereq:
+    sh: touch marker.txt
+  target:
+    sh: test ! -f marker.txt
+`)
+
+	stdout := &bytes.Buffer{}
+	stderr := &bytes.Buffer{}
+	exitCode := run([]string{"-C", tempDir, "-p", "0", "-with", "prereq", "-s", "prereq", "target"}, stdout, stderr)
+
+	assert.Equal(t, 0, exitCode)
+	assert.Empty(t, stderr.String())
+}
+
+func TestRunWithCycleIsDetected(t *testing.T) {
+	tempDir := testTempDir(t)
+	writeTestConfig(t, filepath.Join(tempDir, "tasks.yaml"), `tasks:
+  parent:
+    command: ["true"]
+  child:
+    command: ["true"]
+    dependencies: [parent]
+`)
+
+	stdout := &bytes.Buffer{}
+	stderr := &bytes.Buffer{}
+	exitCode := run([]string{"-C", tempDir, "-p", "0", "-with", "child", "parent"}, stdout, stderr)
+
+	assert.Equal(t, 1, exitCode)
+	assert.Contains(t, stderr.String(), "dependency cycle detected")
 }
 
 func writeTestConfig(t *testing.T, path, contents string) {

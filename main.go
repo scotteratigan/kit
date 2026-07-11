@@ -12,6 +12,7 @@ import (
 	"os/signal"
 	"path/filepath"
 	"runtime/debug"
+	"slices"
 	"strings"
 	"syscall"
 
@@ -34,6 +35,7 @@ type options struct {
 	configFile     string
 	configExplicit bool
 	tasksToSkip    string
+	withTasks      string
 	port           int
 	openBrowser    bool
 	rewrite        bool
@@ -150,6 +152,10 @@ func execute(args []string, stdout io.Writer) error {
 		}
 	}
 
+	if err := injectPrerequisites(wf, taskNames, opts.withTasks); err != nil {
+		return explainWithTaskError(err, configPath)
+	}
+
 	logger := log.New(stdout, "", 0)
 	return explainRuntimeError(internal.RunSubgraph(
 		ctx,
@@ -163,6 +169,35 @@ func execute(args []string, stdout io.Writer) error {
 	), configPath)
 }
 
+// injectPrerequisites adds the comma-separated tasks in withTasks as extra
+// dependencies of each requested task, so they run first for this invocation only.
+func injectPrerequisites(wf *types.Workflow, taskNames []string, withTasks string) error {
+	split := strings.Split(withTasks, ",")
+	if len(split) == 1 && split[0] == "" {
+		return nil
+	}
+	for _, name := range split {
+		if _, ok := wf.Tasks[name]; !ok {
+			return fmt.Errorf("prerequisite task %q not found in workflow", name)
+		}
+	}
+	for _, taskName := range taskNames {
+		task, ok := wf.Tasks[taskName]
+		if !ok {
+			// unknown requested tasks are reported by RunSubgraph
+			continue
+		}
+		for _, dep := range split {
+			if dep == taskName || slices.Contains(task.Dependencies, dep) {
+				continue
+			}
+			task.Dependencies = append(task.Dependencies, dep)
+		}
+		wf.Tasks[taskName] = task
+	}
+	return nil
+}
+
 func parseOptions(args []string) (*options, *flag.FlagSet, error) {
 	opts := &options{workingDir: ".", port: -1}
 	flagSet := flag.NewFlagSet("kit", flag.ContinueOnError)
@@ -173,6 +208,7 @@ func parseOptions(args []string) (*options, *flag.FlagSet, error) {
 	flagSet.StringVar(&opts.workingDir, "C", ".", "working directory (default current directory)")
 	flagSet.StringVar(&opts.configFile, "f", "", "config file (default tasks.yaml)")
 	flagSet.StringVar(&opts.tasksToSkip, "s", "", "tasks to skip (comma separated)")
+	flagSet.StringVar(&opts.withTasks, "with", "", "tasks to add as prerequisites of the requested tasks (comma separated)")
 	flagSet.IntVar(&opts.port, "p", opts.port, "port to start UI on (default 3000, zero disables)")
 	flagSet.BoolVar(&opts.openBrowser, "b", false, "open the UI in the browser (default false)")
 	flagSet.BoolVar(&opts.rewrite, "w", false, "rewrite the config file")
@@ -290,6 +326,14 @@ func explainConfigWriteError(path string, err error) error {
 	)
 }
 
+func explainWithTaskError(err error, configPath string) error {
+	return explainError(
+		fmt.Sprintf("task prerequisite selection failed: %v", err),
+		"a task listed in `-with` is not defined in the loaded workflow",
+		fmt.Sprintf("check the task names in %s and retry", configPath),
+	)
+}
+
 func explainRuntimeError(err error, configPath string) error {
 	if err == nil {
 		return nil
@@ -357,7 +401,7 @@ func bashCompletion(configFile string) string {
     fi
     
     if [[ "${cur}" == -* ]]; then
-        COMPREPLY=($(compgen -W "-h -v -C -f -s -p -b -w --completion" -- "${cur}"))
+        COMPREPLY=($(compgen -W "-h -v -C -f -s -with -p -b -w --completion" -- "${cur}"))
     else
         COMPREPLY=($(compgen -W "${tasks}" -- "${cur}"))
     fi
@@ -380,6 +424,7 @@ _kit() {
         '-C[working directory]:directory:_files -/'
         '-f[config file]:file:_files'
         '-s[tasks to skip]:tasks:'
+        '-with[tasks to add as prerequisites]:tasks:'
         '-p[port to start UI on]:port:'
         '-b[open the UI in the browser]'
         '-w[rewrite the config file]'
@@ -418,6 +463,7 @@ complete -c kit -s v -d 'print version and exit'
 complete -c kit -s C -d 'working directory' -r -a '(__fish_complete_directories)'
 complete -c kit -s f -d 'config file' -r -F
 complete -c kit -s s -d 'tasks to skip'
+complete -c kit -o with -d 'tasks to add as prerequisites'
 complete -c kit -s p -d 'port to start UI on'
 complete -c kit -s b -d 'open the UI in the browser'
 complete -c kit -s w -d 'rewrite the config file'
