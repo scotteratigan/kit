@@ -25,7 +25,7 @@ With Kit, you can define and manage complex workflows in a single `tasks.yaml` f
 - **Auto-restart** - Automatically restart services on failure
 - **File watching** - Re-run tasks when files change
 - **Port forwarding** - Forward ports from services to host
-- **Web UI** - Visualize your workflow and monitor task status
+- **Web UI** - Visualize your workflow, monitor task status, and restart tasks
 - **xterm.js log rendering** - Virtualized terminal emulator for large logs with ANSI color support
 - **Automated releases** - Releases cut from conventional commits on `main`
 
@@ -210,6 +210,22 @@ tasks:
     ports: [3000]
     group: frontend
 ```
+
+### Web UI HTTP API
+
+When the Web UI is enabled (`-p`, default 3000), kit serves a local control API on `localhost`. Restart a task from the UI Restart button, or from an agent/script:
+
+```bash
+curl -X POST http://localhost:3000/tasks/build/restart
+```
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `GET` | `/` | Web UI |
+| `GET` | `/dag` | DAG snapshot (JSON) |
+| `GET` | `/events` | Live task status (SSE) |
+| `GET` | `/logs/{task}` | Task log stream (SSE) |
+| `POST` | `/tasks/{task}/restart` | Cancel and re-run a task (`202` on accept) |
 
 ## Documentation
 

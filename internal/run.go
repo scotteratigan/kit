@@ -185,7 +185,7 @@ func RunSubgraph(ctx context.Context, cancel context.CancelFunc, port int, openB
 	statusEvents := make(chan *TaskNode, 100)
 
 	if port > 0 {
-		go StartServer(ctx, port, wg, subgraph, statusEvents)
+		go StartServer(ctx, port, wg, subgraph, statusEvents, events)
 		if openBrowser {
 			if err := browser.OpenURL(fmt.Sprintf("http://localhost:%d", port)); err != nil {
 				return fmt.Errorf("failed to open browser: %v", err)
@@ -343,8 +343,17 @@ func RunSubgraph(ctx context.Context, cancel context.CancelFunc, port int, openB
 				// we might already be pending, waiting, starting or running this task, so we don't want to start it again
 				node := subgraph.Nodes[taskName]
 
+				// Publish an immediate "restarting" status before the previous
+				// Run() returns (host/container stop can take the grace period),
+				// so the UI reflects the restart request right away.
+				phase := node.getPhase()
 				node.doCancel()
 				allRunning = false
+				if phase != "pending" {
+					node.setStatus("starting", "restarting")
+					setTerminalTitle(workflowTitle(name, subgraph.Nodes))
+					statusEvents <- node
+				}
 
 				// each task is executed in a separate goroutine
 				wg.Add(1)

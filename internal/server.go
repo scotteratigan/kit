@@ -21,12 +21,12 @@ import (
 //go:embed index.html
 var indexHTML string
 
-func StartServer(ctx context.Context, port int, wg *sync.WaitGroup, dag DAG[*TaskNode], events chan *TaskNode) {
+func StartServer(ctx context.Context, port int, wg *sync.WaitGroup, dag DAG[*TaskNode], statusEvents <-chan *TaskNode, control chan<- any) {
 
 	streams := &sync.Map{}
 
 	go func() {
-		for event := range events {
+		for event := range statusEvents {
 			streams.Range(func(key, value any) bool {
 				// non-blocking: a slow client must not stall the broadcast
 				select {
@@ -38,6 +38,31 @@ func StartServer(ctx context.Context, port int, wg *sync.WaitGroup, dag DAG[*Tas
 		}
 	}()
 
+	server := &http.Server{
+		Addr:    fmt.Sprintf("localhost:%d", port),
+		Handler: newHandler(dag, streams, control),
+		BaseContext: func(listener net.Listener) context.Context {
+			return ctx
+		},
+	}
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		<-ctx.Done()
+		if err := server.Shutdown(ctx); err != nil {
+			log.Println(err)
+		}
+	}()
+
+	log.Printf("UI available on http://%s", server.Addr)
+
+	if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+		panic(err)
+	}
+}
+
+func newHandler(dag DAG[*TaskNode], streams *sync.Map, control chan<- any) http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// if internal/index.html exists, serve that
@@ -172,27 +197,24 @@ func StartServer(ctx context.Context, port int, wg *sync.WaitGroup, dag DAG[*Tas
 			}
 		}
 	})
-
-	server := &http.Server{
-		Addr:    fmt.Sprintf("localhost:%d", port),
-		Handler: mux,
-		BaseContext: func(listener net.Listener) context.Context {
-			return ctx
-		},
-	}
-
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		<-ctx.Done()
-		if err := server.Shutdown(ctx); err != nil {
-			log.Println(err)
+	mux.HandleFunc("POST /tasks/{task}/restart", func(w http.ResponseWriter, r *http.Request) {
+		task := r.PathValue("task")
+		if _, ok := dag.Nodes[task]; !ok {
+			http.Error(w, "task not found", http.StatusNotFound)
+			return
 		}
-	}()
-
-	log.Printf("UI available on http://%s", server.Addr)
-
-	if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-		panic(err)
-	}
+		select {
+		case control <- task:
+		default:
+			http.Error(w, "restart queue full", http.StatusServiceUnavailable)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusAccepted)
+		_ = json.NewEncoder(w).Encode(map[string]any{
+			"ok":   true,
+			"task": task,
+		})
+	})
+	return mux
 }
