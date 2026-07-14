@@ -105,6 +105,28 @@
                 font-weight: 500;
             }
 
+            /* Restart control in log header */
+            #restart {
+                color: #58a6ff;
+                font-weight: 500;
+                background: none;
+                border: none;
+                padding: 0;
+                font: inherit;
+                cursor: pointer;
+            }
+
+            #restart:disabled {
+                color: #484f58;
+                cursor: default;
+            }
+
+            #log-actions {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+            }
+
             /* Task name in log header */
             #name {
                 font-weight: 600;
@@ -170,7 +192,10 @@
                     <b id="name">Click on a task to see logs</b>
                      <span id="message"></span>
                 </div>
-                <div id="follow" style="cursor: pointer">Auto-scrolling</div>
+                <div id="log-actions">
+                    <button id="restart" disabled>Restart</button>
+                    <div id="follow" style="cursor: pointer">Auto-scrolling</div>
+                </div>
             </div>
             <div id="logs"></div>
             <div
@@ -390,8 +415,36 @@
             const message = document.getElementById("message");
             const logs = document.getElementById("logs");
             const logsContainer = document.getElementById("log-container");
+            const restart = document.getElementById("restart");
             const follow = document.getElementById("follow");
             const resizer = document.getElementById("resizer");
+            let selectedTask = null;
+
+            restart.addEventListener("click", async () => {
+                if (!selectedTask || restart.disabled) {
+                    return;
+                }
+                restart.disabled = true;
+                restart.textContent = "Restarting…";
+                message.textContent = "restarting";
+                try {
+                    const res = await fetch(
+                        `/tasks/${encodeURIComponent(selectedTask)}/restart`,
+                        { method: "POST" },
+                    );
+                    if (!res.ok) {
+                        const text = await res.text();
+                        console.error("restart failed:", res.status, text);
+                        message.textContent = text || "restart failed";
+                    }
+                } catch (err) {
+                    console.error("restart failed:", err);
+                    message.textContent = "restart failed";
+                } finally {
+                    restart.textContent = "Restart";
+                    restart.disabled = !selectedTask;
+                }
+            });
             const graphContainer = document.getElementById("cy");
 
             // Auto-scroll flag for logs
@@ -572,6 +625,18 @@
                         const nodeId = node.id();
                         const nodeData = node.data();
 
+                        // Compound group nodes are not restartable tasks
+                        if (nodeId.startsWith("group:")) {
+                            selectedTask = null;
+                            restart.disabled = true;
+                            name.textContent = nodeData.label || nodeId;
+                            message.textContent = "";
+                            return;
+                        }
+
+                        selectedTask = nodeId;
+                        restart.disabled = false;
+
                         // Update the log header with node information
                         name.textContent = nodeId;
                         message.textContent = nodeData.message
@@ -643,6 +708,11 @@
                                     node.task?.ports || "",
                                 );
                                 existingNode.data("icon", iconDataUrl);
+
+                                // Keep the log header in sync for the selected task
+                                if (selectedTask === node.name) {
+                                    message.textContent = node.message || "";
+                                }
 
                                 // Update parent if group changed
                                 if (node.task && node.task.group) {
